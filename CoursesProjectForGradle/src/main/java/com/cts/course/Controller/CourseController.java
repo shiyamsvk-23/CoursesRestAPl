@@ -71,7 +71,7 @@ public class CourseController {
 			return courseService.viewAllCourses();
 		} catch (CoursesNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new CoursesNotFoundException("No students");
+			throw new CoursesNotFoundException("No Courses");
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class CourseController {
 			courseService.updateDetail(course);
 		} catch (CoursesNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new CoursesNotFoundException("Student not found.Please select exsisting student to update details.");
+			throw new CoursesNotFoundException("Course not found.Please select exsisting course to update details.");
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class CourseController {
 		}
 		catch(EmptyResultDataAccessException e)
 		{
-			throw new CoursesNotFoundException("Student record does not found");
+			throw new CoursesNotFoundException("Course record does not found");
 		}
 	}
 }
