@@ -91,7 +91,7 @@ public class CourseService {
 	
 	public String deletecourseByCourseId(int courseId) throws EmptyResultDataAccessException
 	{
-		repository.deleteByCourseId(courseId);
+		repository.deleteById(courseId);
 		return "Success";
 	}
 }
