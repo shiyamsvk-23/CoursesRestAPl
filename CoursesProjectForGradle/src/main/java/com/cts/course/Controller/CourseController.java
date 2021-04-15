@@ -97,11 +97,11 @@ public class CourseController {
 	 * @param courseId
 	 * @throws CoursesNotFoundException
 	 */
-	@DeleteMapping("/delete/{courseId}")
-	public void deleteCourseByCourseId(int courseId) throws CoursesNotFoundException
+	@DeleteMapping("/delete/{course}")
+	public void deleteCourseByCourseId(Courses course) throws CoursesNotFoundException
 	{
 		try {
-			courseService.deletecourseByCourseId(courseId);
+			courseService.deletecourseByCourseId(course);
 		}
 		catch(EmptyResultDataAccessException e)
 		{

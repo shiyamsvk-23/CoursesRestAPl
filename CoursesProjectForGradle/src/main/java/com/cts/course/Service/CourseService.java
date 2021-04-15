@@ -87,11 +87,13 @@ public class CourseService {
 	 * deletecourseBycourseId used to delete the record of course
 	 * @param courseId
 	 * @throws EmptyResultDataAccessException
+	 * @throws CoursesNotFoundException 
 	 */
 	
-	public String deletecourseByCourseId(int courseId) throws EmptyResultDataAccessException
+	public String deletecourseByCourseId(Courses course) throws EmptyResultDataAccessException, CoursesNotFoundException
 	{
-		repository.deleteById(courseId);
+		int id=course.getCourseId();
+		repository.deleteById(id);
 		return "Success";
 	}
 }
