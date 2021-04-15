@@ -22,10 +22,11 @@ public class CourseService {
 	 * 
 	 * @param course
 	 */
-	public void addDetails(Courses course) {
-		// TODO Auto-generated method stub
+	public String addDetails(Courses course) {
+	
 		repository.save(course);
-
+		return "success";
+	
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class CourseService {
 	 */
 
 	public Courses coursesByCourseId(int courseId) throws CoursesNotFoundException {
-		// TODO Auto-generated method stub
+	
 		Optional<Courses> optional = repository.findById(courseId);
 		if (!optional.isPresent())
 			throw new CoursesNotFoundException();
@@ -53,7 +54,7 @@ public class CourseService {
 	 * @throws CoursesNotFoundException
 	 */
 	public List<Courses> viewAllCourses() throws CoursesNotFoundException {
-		// TODO Auto-generated method stub
+	
 		List<Courses> courseList = repository.findAll();
 		if (courseList.isEmpty())
 			throw new CoursesNotFoundException();
@@ -68,7 +69,6 @@ public class CourseService {
 	 */
 	
 	public void updateDetail(Courses course) throws CoursesNotFoundException {
-		// TODO Auto-generated method stub
 		
 		Courses tempCourses = this.coursesByCourseId(course.getCourseId());
 		tempCourses.setCourse_Name(course.getCourse_Name());
@@ -80,8 +80,7 @@ public class CourseService {
 		tempCourses.setCreated_date(course.getCreated_date());
 		tempCourses.setModified_date(course.getModified_date());
 		repository.save(tempCourses);
-		
-		
+			
 	}
 
 	/**
@@ -90,8 +89,9 @@ public class CourseService {
 	 * @throws EmptyResultDataAccessException
 	 */
 	
-	public void deletecourseByCourseId(int courseId) throws EmptyResultDataAccessException
+	public String deletecourseByCourseId(int courseId) throws EmptyResultDataAccessException
 	{
-		repository.deleteById(courseId);
+		repository.deleteByCourseId(courseId);
+		return "Success";
 	}
 }

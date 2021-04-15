@@ -26,7 +26,6 @@ public class CourseController {
 	@Autowired
 	CourseService courseService;
 
-	//https://github.com/harshitsankhala/springStudentRepo.git
 	@GetMapping("/demo")
 	public String sayHello() {
 		return "Hi, Welcome";
@@ -38,8 +37,9 @@ public class CourseController {
 	 * @param Course
 	 */
 	@PostMapping("/addDetails")
-	public void addDetails(@Valid @RequestBody Courses course) {
+	public String addDetails(@Valid @RequestBody Courses course) {
 		courseService.addDetails(course);
+	   return "success";
 	}
 
 	/**
@@ -54,7 +54,6 @@ public class CourseController {
 		try {
 			return courseService.coursesByCourseId(courseId);
 		} catch (CoursesNotFoundException e) {
-			// TODO Auto-generated catch block
 			throw new CoursesNotFoundException("No Courses found with courseId = " + courseId);
 		}
 	}
@@ -70,7 +69,7 @@ public class CourseController {
 		try {
 			return courseService.viewAllCourses();
 		} catch (CoursesNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			throw new CoursesNotFoundException("No Courses");
 		}
 	}
@@ -86,7 +85,7 @@ public class CourseController {
 		try {
 			courseService.updateDetail(course);
 		} catch (CoursesNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			throw new CoursesNotFoundException("Course not found.Please select exsisting course to update details.");
 		}
 	}

@@ -8,19 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 
 @Entity
 @Table
 public class Courses {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private int courseId;
 	@NotBlank(message = "course_Name should not be blank")
-	private String course_Name;	
+	private String course_Name;
 	@NotBlank(message = "teacher_Name should not be blank")
 	private String teacher_Name;
 	@NotBlank(message = "class1 should not be blank")
@@ -28,19 +29,17 @@ public class Courses {
 	@NotBlank(message = "createdby should not be blank")
 	private String createdby;
 	@NotBlank(message = "modifiedby should not be blank")
-	private String modifiedby;	
+	private String modifiedby;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date created_date;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date modified_date;
 
 	public Courses() {
-		
+
 	}
 
-	
-	
-	public Courses(int courseId, @NotBlank(message = "course_Name should not be blank") String course_Name,
+	public Courses(@NotNull int courseId, @NotBlank(message = "course_Name should not be blank") String course_Name,
 			@NotBlank(message = "teacher_Name should not be blank") String teacher_Name,
 			@NotBlank(message = "class1 should not be blank") String class1,
 			@NotBlank(message = "createdby should not be blank") String createdby,
@@ -56,8 +55,6 @@ public class Courses {
 		this.created_date = created_date;
 		this.modified_date = modified_date;
 	}
-
-
 
 	public int getCourseId() {
 		return courseId;
@@ -121,5 +118,5 @@ public class Courses {
 
 	public void setModified_date(Date modified_date) {
 		this.modified_date = modified_date;
-	}	
+	}
 }
