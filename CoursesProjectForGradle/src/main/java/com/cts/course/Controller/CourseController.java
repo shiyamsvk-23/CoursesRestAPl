@@ -1,20 +1,24 @@
 package com.cts.course.Controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cts.course.Exception.CoursesNotFoundException;
 import com.cts.course.Service.CourseService;
@@ -28,11 +32,6 @@ public class CourseController {
 	@Autowired
 	CourseService courseService;
 
-	@GetMapping("/demo")
-	public String sayHello() {
-		return "Hi, Welcome";
-	}
-
 	/**
 	 * addDetails method used to add details of Course
 	 * 
@@ -41,7 +40,7 @@ public class CourseController {
 	@PostMapping("/addDetails")
 	public String addDetails(@Valid @RequestBody Courses course) {
 		courseService.addDetails(course);
-	   return "success";
+		return "success";
 	}
 
 	/**
@@ -52,7 +51,7 @@ public class CourseController {
 	 * @throws CoursesNotFoundException
 	 */
 	@GetMapping("coursesByCourseId/{courseId}")
-	public Courses coursesByCourseId(@PathVariable int courseId) throws CoursesNotFoundException {
+	public Courses coursesByCourseId(@RequestBody int courseId) throws CoursesNotFoundException {
 		try {
 			return courseService.coursesByCourseId(courseId);
 		} catch (CoursesNotFoundException e) {
@@ -61,29 +60,13 @@ public class CourseController {
 	}
 
 	/**
-	 * allCourses method used to return all Course details
+	 * updateDetails method used to update details of Course
 	 * 
-	 * @return
-	 * @throws CoursesNotFoundException
-	 */
-	@GetMapping("showAllCourse")
-	public List<Courses> viewAllCourses() throws CoursesNotFoundException {
-		try {
-			return courseService.viewAllCourses();
-		} catch (CoursesNotFoundException e) {
-
-			throw new CoursesNotFoundException("No Courses");
-		}
-	}
-	
-	/**
-	 * updateDetails method used to update details of Course 
 	 * @param Course
 	 * @throws CoursesNotFoundException
 	 */
 	@PutMapping("/update/{course}")
-	public void updateDetails(@Valid @RequestBody Courses course) throws CoursesNotFoundException
-	{
+	public void updateDetails(@Valid @RequestBody Courses course) throws CoursesNotFoundException {
 		try {
 			courseService.updateDetail(course);
 		} catch (CoursesNotFoundException e) {
@@ -91,21 +74,21 @@ public class CourseController {
 			throw new CoursesNotFoundException("Course not found.Please select exsisting course to update details.");
 		}
 	}
-	
+
 	/**
 	 * deleteCourseById used to delete the record of Course
+	 * 
 	 * @param courseId
 	 * @throws CoursesNotFoundException
 	 */
-	@DeleteMapping("/delete/{course}")
-	public void deleteCourseByCourseId(Courses course) throws CoursesNotFoundException
-	{
+	@DeleteMapping("/deleteById")
+	public void deleteCourseByCourseId(@RequestParam int courseId) throws CoursesNotFoundException {
 		try {
-			courseService.deletecourseByCourseId(course);
-		}
-		catch(EmptyResultDataAccessException e)
-		{
+			courseService.deletecourseByCourseId(courseId);
+		} catch (EmptyResultDataAccessException e) {
 			throw new CoursesNotFoundException("Course record does not found");
 		}
 	}
+	
+	
 }
